@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第1章：生物形态学与怪物设计</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">游戏资产3D网格设计完全指南</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第1章：生物形态学与怪物设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第2章：艺术史中的怪物原型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第3章：文化符号系统与风格化</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第4章：非地球生命的设计原则</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第5章：灭绝古生物与异星生命</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第6章：动态雕塑与生物机械</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第7章：异化与陌生化技法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第8章：分形几何与自然形态</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第9章：噪声函数与程序化纹理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第10章：生成式算法与进化设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第11章：武器设计的文化语言</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第12章：机关与可动装置</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="1">第1章：生物形态学与怪物设计</h1>
+<h2 id="_1">开篇</h2>
+<p>生物形态学是理解生命如何通过亿万年进化塑造出令人惊叹形态的科学。对于游戏怪物设计师而言，大自然既是最伟大的概念艺术家，也是最严谨的工程师。本章将深入探讨如何从生物学原理中提取设计语言，创造既有科学依据又充满想象力的游戏怪物。我们将学习脊椎动物的骨骼逻辑、昆虫的几何美学、深海生物的异形构造、植物与真菌的生长模式，以及共生关系的视觉化表达。通过理解这些生物学原理，你将能够创造出既可信又独特的生物设计。</p>
+<h2 id="11">1.1 脊椎动物与无脊椎动物的结构原理</h2>
+<h3 id="vs">内骨骼vs外骨骼：设计哲学的分野</h3>
+<p>脊椎动物的内骨骼系统提供了一个由内而外的支撑框架，这种设计允许肌肉附着在骨骼外部，实现更大的力量输出和灵活性。在3D建模中，内骨骼生物的设计流程通常是：</p>
+<ol>
+<li><strong>骨架确立</strong>：先定义脊柱曲线，确定生物的基本姿态</li>
+<li><strong>关节层级</strong>：建立骨骼父子关系，确保运动学正确</li>
+<li><strong>肌肉包裹</strong>：在骨骼基础上添加肌肉体块</li>
+<li><strong>皮肤覆盖</strong>：最外层添加皮肤、毛发或鳞片</li>
+</ol>
+<p>相反，无脊椎动物的外骨骼系统是一种由外而内的防护策略。节肢动物（如昆虫、蜘蛛、甲壳类）的外骨骼设计要点：</p>
+<div class="codehilite"><pre><span></span><code>外骨骼拓扑结构：
+     [头部甲壳]
+          |
+    [胸部分节] ← 肢体附着点
+     /   |   \
+   肢1  肢2  肢3
+          |
+    [腹部分节]
+</code></pre></div>
+
+<h3 id="_2">关节系统与运动逻辑</h3>
+<p>脊椎动物的球窝关节（如肩关节）提供了三轴旋转自由度，而铰链关节（如肘关节）则限制在单轴运动。这种限制并非缺陷，而是进化的智慧——它提供了稳定性和可预测的运动路径。</p>
+<p>在设计怪物时，可以打破这些限制，但要保持内在逻辑：</p>
+<ul>
+<li><strong>超关节设计</strong>：额外的关节点可以创造诡异的运动模式</li>
+<li><strong>反向关节</strong>：如鸟类的"膝盖"实际是踝关节，这种设计可以创造独特的步态</li>
+<li><strong>万向关节</strong>：某些异星生物可能进化出360度旋转的关节</li>
+</ul>
+<p>关节运动的数学描述使用欧拉角或四元数：</p>
+<p>$$\mathbf{R} = \mathbf{R}_z(\gamma) \mathbf{R}_y(\beta) \mathbf{R}_x(\alpha)$$
+其中 $\alpha, \beta, \gamma$ 分别代表绕 x、y、z 轴的旋转角度。</p>
+<h3 id="_3">对称性与非对称设计</h3>
+<p>地球生物大多呈现双侧对称（Bilateral Symmetry），这是因为定向运动的需要。但我们可以探索其他对称形式：</p>
+<ul>
+<li><strong>径向对称</strong>（Radial Symmetry）：如海葵、水母，适合全方位感知和捕食</li>
+<li><strong>螺旋对称</strong>（Helical Symmetry）：如某些贝壳，可创造优雅的数学美感</li>
+<li><strong>非对称设计</strong>（Asymmetry）：如比目鱼，可暗示特殊的生态适应</li>
+</ul>
+<p>对称性可以用群论来描述，最常见的是二面体群 $D_n$：
+$$D_n = \{e, r, r^2, ..., r^{n-1}, s, sr, sr^2, ..., sr^{n-1}\}$$
+其中 $r$ 表示旋转，$s$ 表示反射。</p>
+<h2 id="12">1.2 昆虫外骨骼的几何特征</h2>
+<h3 id="_4">节肢结构的模块化设计</h3>
+<p>昆虫的身体分节是一种高效的模块化设计策略。每个体节（segment）都是一个半独立的单元，包含：</p>
+<ul>
+<li>背板（tergum）</li>
+<li>腹板（sternum）  </li>
+<li>侧板（pleuron）</li>
+<li>肢体附着点（condyle）</li>
+</ul>
+<p>这种模块化允许我们通过简单的重复和变化创造复杂的形态：</p>
+<div class="codehilite"><pre><span></span><code>体节变化公式：
+S(n) = S_base × (1 + α×sin(nπ/N))
+
+其中：
+
+<span class="k">-</span> S(n) 是第n个体节的尺寸
+<span class="k">-</span> S_base 是基础体节尺寸
+<span class="k">-</span> α 是变化幅度系数
+<span class="k">-</span> N 是总体节数
+</code></pre></div>
+
+<h3 id="_5">复眼的几何排列</h3>
+<p>昆虫复眼由数千个小眼（ommatidia）组成，排列遵循精确的几何规律。最常见的是六边形密堆积（hexagonal close packing），这提供了最大的覆盖效率。</p>
+<p>小眼分布可用Voronoi图来生成：
+$$V_i = \{x \in \mathbb{R}^2 : ||x - p_i|| \leq ||x - p_j||, \forall j \neq i\}$$
+在3D建模中，可以使用以下算法生成复眼表面：</p>
+<ol>
+<li>在球面上均匀分布种子点（使用Fibonacci螺旋）</li>
+<li>计算球面Voronoi图</li>
+<li>将每个Voronoi单元挤出形成小眼</li>
+<li>添加透镜曲率和表面细节</li>
+</ol>
+<h3 id="_6">翅膀折叠机制</h3>
+<p>昆虫翅膀的折叠是一个优雅的工程问题。甲虫的鞘翅下隐藏着可以展开数倍面积的膜翅，这种折叠模式启发了航天工程的太阳能板设计。</p>
+<p>典型的翅膀折叠模式包括：</p>
+<ul>
+<li><strong>扇形折叠</strong>：如蜻蜓，沿径向折痕收拢</li>
+<li><strong>Z字折叠</strong>：如蝗虫，前后翅重叠</li>
+<li><strong>Miura折叠</strong>：一种可以单一运动完全展开的折纸模式</li>
+</ul>
+<p>折叠角度的数学关系：
+$$\theta_{fold} = \arccos\left(\frac{L_{folded}}{L_{extended}}\right)$$</p>
+<h2 id="13">1.3 深海生物的异形美学</h2>
+<h3 id="_7">透明与发光器官</h3>
+<p>深海环境的极端条件造就了独特的生物设计语言。透明化是一种极致的伪装策略，而生物发光则是深海的视觉通讯系统。</p>
+<p><strong>透明材质的3D表现</strong>需要考虑：</p>
+<ul>
+<li>折射率（IOR）：典型值1.33-1.45（接近水）</li>
+<li>次表面散射（SSS）：极低的散射系数</li>
+<li>内部器官的选择性可见：某些器官保持不透明</li>
+</ul>
+<p><strong>生物发光的视觉设计</strong>：</p>
+<p>发光器官（photophore）的分布遵循功能逻辑：</p>
+<ul>
+<li>腹部发光：反照明伪装（counter-illumination）</li>
+<li>诱饵发光：如鮟鱇鱼的钓竿</li>
+<li>警告发光：全身闪烁模式</li>
+</ul>
+<p>发光强度的衰减遵循平方反比定律：
+$$I(r) = \frac{I_0}{4\pi r^2} \cdot e^{-\mu r}$$
+其中 $\mu$ 是水的吸收系数。</p>
+<h3 id="_8">极压环境的形态适应</h3>
+<p>深海压力可达1000个大气压，这种极端环境造就了独特的形态适应：</p>
+<ul>
+<li><strong>压力平衡</strong>：充满凝胶或油脂的体腔</li>
+<li><strong>骨骼退化</strong>：软骨取代硬骨</li>
+<li><strong>巨大化</strong>：深海巨型症（deep-sea gigantism）</li>
+</ul>
+<p>这些适应可以转化为设计元素：</p>
+<ul>
+<li>凝胶状半透明材质</li>
+<li>软体无骨的诡异运动</li>
+<li>不符合常规比例的巨型器官</li>
+</ul>
+<h3 id="_9">触手与滤食器官</h3>
+<p>深海生物的触手设计极其多样：</p>
+<p><strong>功能性分类</strong>：</p>
+<ol>
+<li>捕食触手：带吸盘或倒钩</li>
+<li>感知触手：覆盖化学感受器</li>
+<li>运动触手：用于"走路"的特化触手</li>
+</ol>
+<p><strong>触手的程序化生成</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 伪代码：触手曲线生成</span>
+<span class="k">def</span> <span class="nf">generate_tentacle</span><span class="p">(</span><span class="n">base_pos</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">segments</span><span class="p">):</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">segments</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">segments</span>
+        <span class="c1"># 基础曲线：悬链线</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">base_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">length</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">base_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">a</span> <span class="o">*</span> <span class="n">cosh</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">a</span><span class="p">)</span>
+        <span class="c1"># 添加螺旋扰动</span>
+        <span class="n">spiral</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">2</span><span class="n">π</span> <span class="o">*</span> <span class="n">coils</span><span class="p">)</span> <span class="o">*</span> <span class="n">amplitude</span>
+        <span class="c1"># 添加噪声</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="n">perlin</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">frequency</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Vec3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">spiral</span><span class="p">,</span> <span class="n">noise</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">CatmullRomSpline</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="14">1.4 植物与真菌的形态语言</h2>
+<h3 id="_10">分形生长模式</h3>
+<p>植物的生长遵循自相似的分形规律，这可以用L-System（Lindenmayer System）来描述：</p>
+<p><strong>基础L-System规则</strong>：</p>
+<ul>
+<li>公理（Axiom）：F</li>
+<li>规则（Rules）：F → F[+F]F[-F]F</li>
+<li>符号含义：</li>
+<li>F：向前生长</li>
+<li>+：右转δ角度  </li>
+<li>-：左转δ角度</li>
+<li>[：保存当前状态</li>
+<li>]：恢复保存的状态</li>
+</ul>
+<p><strong>分形维度</strong>计算：
+$$D = \frac{\log N}{\log(1/r)}$$
+其中N是自相似部分的数量，r是缩放比例。</p>
+<p>典型的植物分形维度：</p>
+<ul>
+<li>蕨类：D ≈ 1.7</li>
+<li>树冠：D ≈ 2.5</li>
+<li>根系：D ≈ 1.4</li>
+</ul>
+<h3 id="_11">孢子传播机制的视觉化</h3>
+<p>真菌的孢子传播机制提供了独特的视觉语言：</p>
+<p><strong>孢子释放模式</strong>：</p>
+<ol>
+<li><strong>爆发式</strong>：如马勃菌，瞬间释放孢子云</li>
+<li><strong>滴落式</strong>：如鬼笔菌，粘液包裹孢子</li>
+<li><strong>弹射式</strong>：如炮弹真菌，定向发射</li>
+</ol>
+<p><strong>孢子云的粒子系统参数</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">初始速度</span><span class="o">:</span><span class="w"> </span><span class="n">v₀</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="o">-</span><span class="mi">10</span><span class="w"> </span><span class="n">m</span><span class="o">/</span><span class="n">s</span>
+<span class="err">扩散角度</span><span class="o">:</span><span class="w"> </span><span class="err">θ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">15</span><span class="o">-</span><span class="mi">45</span><span class="err">°</span>
+<span class="err">粒子数量</span><span class="o">:</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="err">⁶</span><span class="o">-</span><span class="mi">10</span><span class="err">⁸</span>
+<span class="err">布朗运动</span><span class="o">:</span><span class="w"> </span><span class="err">σ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span>
+<span class="err">重力影响</span><span class="o">:</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">9.8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">particle_mass</span>
+<span class="err">空气阻力</span><span class="o">:</span><span class="w"> </span><span class="n">F_drag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">0.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="err">ρ</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">v²</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">C_d</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">A</span>
+</code></pre></div>
+
+<h3 id="_12">根系网络与菌丝体</h3>
+<p>地下的根系网络和菌根共生体系是一个复杂的三维结构：</p>
+<p><strong>根系的算法生成</strong>：</p>
+<ol>
+<li>
+<p><strong>空间殖民算法</strong>（Space Colonization）：
+   - 在土壤中分布营养点
+   - 根系向最近的营养点生长
+   - 消耗到达的营养点
+   - 分支when营养浓度高</p>
+</li>
+<li>
+<p><strong>最短路径树</strong>（Shortest Path Tree）：
+   使用Dijkstra算法优化营养传输路径</p>
+</li>
+</ol>
+<p><strong>菌丝网络的数学模型</strong>：</p>
+<p>菌丝生长速度：
+$$\frac{dr}{dt} = k \cdot [S] / (K_m + [S])$$
+其中[S]是基质浓度，K_m是米氏常数。</p>
+<h2 id="15">1.5 共生与寄生关系的视觉表现</h2>
+<h3 id="_13">宿主与寄生体的融合设计</h3>
+<p>共生关系在视觉上表现为两种或多种生物形态的有机融合。设计要点包括：</p>
+<p><strong>融合界面的处理</strong>：</p>
+<ul>
+<li>渐变过渡：材质和颜色的平滑过渡</li>
+<li>嵌入式生长：寄生体"钻入"宿主</li>
+<li>替换式共生：寄生体完全取代某个器官</li>
+</ul>
+<p><strong>拓扑连接策略</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">表面附着</span><span class="err">：</span><span class="n">保持独立拓扑</span><span class="err">，</span><span class="n">仅在接触点融合</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">穿透连接</span><span class="err">：</span><span class="n">寄生体穿过宿主网格</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">完全融合</span><span class="err">：</span><span class="n">共享顶点</span><span class="err">，</span><span class="n">统一UV</span>
+</code></pre></div>
+
+<h3 id="_14">互利共生的形态整合</h3>
+<p>互利共生创造了自然界最优雅的设计案例：</p>
+<p><strong>地衣（真菌+藻类）模式</strong>：</p>
+<ul>
+<li>真菌提供结构支撑</li>
+<li>藻类提供营养生产</li>
+<li>形态上表现为层状结构</li>
+</ul>
+<p><strong>清洁鱼与大型鱼类</strong>：</p>
+<ul>
+<li>尺度对比创造视觉张力</li>
+<li>专门化的口器设计</li>
+<li>共生信号（颜色、行为）</li>
+</ul>
+<h3 id="_15">寄生转化的阶段表现</h3>
+<p>寄生关系often包含宿主的渐进转化：</p>
+<p><strong>阶段设计</strong>：</p>
+<ol>
+<li><strong>感染初期</strong>：微小的异常（颜色变化、小凸起）</li>
+<li><strong>扩散期</strong>：明显的形变，但保持宿主基本形态</li>
+<li><strong>控制期</strong>：寄生体特征开始主导</li>
+<li><strong>完全转化</strong>：宿主成为寄生体的延伸</li>
+</ol>
+<p><strong>冬虫夏草的启发</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">阶段</span><span class="mi">1</span><span class="o">:</span><span class="w"> </span><span class="err">孢子附着</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">表面微小白点</span>
+<span class="err">阶段</span><span class="mi">2</span><span class="o">:</span><span class="w"> </span><span class="err">菌丝侵入</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">皮下网状纹理</span>
+<span class="err">阶段</span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="err">内部殖民</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">肢体僵硬、关节肿大</span>
+<span class="err">阶段</span><span class="mi">4</span><span class="o">:</span><span class="w"> </span><span class="err">子实体爆发</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="err">头部长出子实体</span>
+</code></pre></div>
+
+<p>形态转化的数学插值：
+$$M(t) = (1-t)^3 M_0 + 3t(1-t)^2 M_1 + 3t^2(1-t) M_2 + t^3 M_3$$</p>
+<p>其中M₀到M₃代表不同阶段的形态。</p>
+<h2 id="_16">本章小结</h2>
+<p>生物形态学为游戏怪物设计提供了无尽的灵感源泉。通过本章学习，我们掌握了：</p>
+<ol>
+<li><strong>结构系统的设计逻辑</strong>：内骨骼与外骨骼各自的优势和建模策略，如何通过打破常规关节限制创造独特的运动模式</li>
+<li><strong>模块化设计思维</strong>：昆虫的节肢结构展示了如何通过简单模块的重复变化创造复杂形态</li>
+<li><strong>极端环境的适应性设计</strong>：深海生物的透明化、发光器官、压力适应为异世界生物设计提供了参考</li>
+<li><strong>数学化的生长模式</strong>：L-System和分形几何在植物形态生成中的应用</li>
+<li><strong>关系性设计</strong>：共生与寄生关系如何在视觉上体现生物间的相互作用</li>
+</ol>
+<p>关键公式回顾：</p>
+<ul>
+<li>关节旋转：$\mathbf{R} = \mathbf{R}_z(\gamma) \mathbf{R}_y(\beta) \mathbf{R}_x(\alpha)$</li>
+<li>体节变化：$S(n) = S_{base} \times (1 + \alpha \times \sin(n\pi/N))$</li>
+<li>分形维度：$D = \log N / \log(1/r)$</li>
+<li>形态插值：$M(t) = \sum_{i=0}^{3} B_i(t) M_i$（贝塞尔曲线）</li>
+</ul>
+<p>这些原理不仅适用于写实风格的生物设计，更可以作为创造全新生命形式的起点。记住：最好的设计既要有科学的内在逻辑，又要有艺术的想象力。</p>
+<h2 id="_17">练习题</h2>
+<h3 id="_18">基础题</h3>
+<p><strong>练习1.1：骨骼系统分析</strong>
+选择一种现实中的脊椎动物（如猫、鹰、蜥蜴），分析其骨骼结构并设计一个变体，要求：</p>
+<ul>
+<li>保持基本的骨骼逻辑</li>
+<li>添加一个额外的肢体或改变一个关节类型</li>
+<li>说明这种改变对运动方式的影响</li>
+</ul>
+<p><em>提示：考虑重心变化和肌肉附着点的调整</em></p>
+<details>
+<summary>参考答案</summary>
+<p>以猫为基础：</p>
+<ul>
+<li>原始结构：四肢、柔性脊柱、21-23节尾椎</li>
+<li>变体设计：在肩胛骨处添加第二对前肢</li>
+<li>骨骼调整：扩大胸腔，加强胸骨，肩胛骨分为上下两部分</li>
+<li>运动影响：
+  1. 可以实现"双层"奔跑，上肢用于抓握，下肢用于推进
+  2. 攀爬能力大幅提升
+  3. 需要更复杂的神经控制系统
+  4. 能量消耗增加约40%</li>
+</ul>
+</details>
+<p><strong>练习1.2：昆虫几何设计</strong>
+使用六边形密堆积原理，设计一个复眼表面，要求：</p>
+<ul>
+<li>小眼数量：1000-2000个</li>
+<li>计算所需的球面面积</li>
+<li>确定每个小眼的直径</li>
+</ul>
+<p><em>提示：六边形密堆积效率约为0.9069</em></p>
+<details>
+<summary>参考答案</summary>
+<p>设计参数：</p>
+<ul>
+<li>小眼数量：1500个</li>
+<li>复眼半径：5mm（球冠）</li>
+<li>球冠面积：A = 2πr²(1-cosθ) ≈ 50mm²</li>
+<li>单个六边形面积：A_hex = 50/1500 ≈ 0.033mm²</li>
+<li>六边形边长：a = √(2A_hex/(3√3)) ≈ 0.08mm</li>
+<li>小眼直径：d = 2a ≈ 0.16mm</li>
+</ul>
+<p>验证：排列效率 = 1500 × 0.033 / 50 ≈ 0.99（考虑边缘不规则）</p>
+</details>
+<p><strong>练习1.3：L-System植物生成</strong>
+给定以下L-System规则，绘制前3次迭代的结果：</p>
+<ul>
+<li>公理：X</li>
+<li>规则：X → F[+X][-X]FX, F → FF</li>
+<li>角度：25°</li>
+</ul>
+<p><em>提示：使用龟图形解释器理解符号含义</em></p>
+<details>
+<summary>参考答案</summary>
+<p>迭代结果：</p>
+<ul>
+<li>第0代：X</li>
+<li>第1代：F[+X][-X]FX</li>
+<li>第2代：FF[+F[+X][-X]FX][-F[+X][-X]FX]FFF[+X][-X]FX</li>
+<li>第3代：（过长，产生类似蕨类植物的分形结构）</li>
+</ul>
+<p>结构特征：</p>
+<ul>
+<li>主茎不断延长（F → FF）</li>
+<li>每个生长点产生三个分支</li>
+<li>左右对称分支（+X和-X）</li>
+<li>中央继续生长（FX）</li>
+<li>形成自相似的树状结构</li>
+</ul>
+</details>
+<h3 id="_19">挑战题</h3>
+<p><strong>练习1.4：深海生物压力适应设计</strong>
+设计一种生活在马里亚纳海沟（11000米深）的虚构生物，需要：</p>
+<ul>
+<li>解释其压力适应机制（1100个大气压）</li>
+<li>设计至少两种发光器官及其功能</li>
+<li>计算其理论密度范围</li>
+</ul>
+<p><em>提示：考虑压力平衡和浮力控制</em></p>
+<details>
+<summary>参考答案</summary>
+<p>设计方案："深渊水母龙"</p>
+<ol>
+<li>
+<p>压力适应：
+   - 充油骨骼：密度0.85g/cm³的生物油脂填充中空骨骼
+   - 压力囊：可压缩的气囊，随深度自动调节
+   - 凝胶填充：身体70%为不可压缩凝胶物质</p>
+</li>
+<li>
+<p>发光器官：
+   - 钓饵器官：头部触须末端，波长480nm（蓝光），用于诱捕猎物
+   - 腹部反照明：200个小型发光点，匹配上方微弱光线，用于伪装
+   - 威慑闪光：全身脉冲发光，3000流明，用于惊吓捕食者</p>
+</li>
+<li>
+<p>密度计算：
+   - 海水密度（11000m）：ρ_water ≈ 1.05 g/cm³
+   - 中性浮力要求：ρ_creature = 1.05 g/cm³
+   - 组成：40%凝胶(1.02)，30%油脂(0.85)，20%蛋白质(1.35)，10%水(1.00)
+   - 平均密度：0.4×1.02 + 0.3×0.85 + 0.2×1.35 + 0.1×1.00 = 1.033 g/cm³
+   - 需要微调油脂含量达到精确中性浮力</p>
+</li>
+</ol>
+</details>
+<p><strong>练习1.5：共生体系统设计</strong>
+创造一个三方共生系统，包含：</p>
+<ul>
+<li>一个大型宿主</li>
+<li>一个清洁共生体</li>
+<li>一个防御共生体
+要求详细说明它们的形态整合和功能分工。</li>
+</ul>
+<p><em>提示：参考珊瑚-虫黄藻-清洁虾系统</em></p>
+<details>
+<summary>参考答案</summary>
+<p>"晶甲兽共生体系"：</p>
+<ol>
+<li>
+<p><strong>宿主 - 晶甲兽</strong>（10米长）：
+   - 硅基外壳，半透明晶体结构
+   - 背部有规律的六边形凹槽（共生体栖息地）
+   - 缓慢移动，主要通过光合作用获取能量</p>
+</li>
+<li>
+<p><strong>清洁共生体 - 螺旋清洁虫</strong>（5-10cm）：
+   - 螺旋形身体，可在凹槽中快速移动
+   - 分泌弱酸性物质，清除晶体表面的沉积物
+   - 以宿主脱落的晶体碎片为食
+   - 形态整合：身体直径精确匹配凹槽宽度</p>
+</li>
+<li>
+<p><strong>防御共生体 - 毒刺水螅</strong>（2-3cm）：
+   - 固着在凹槽边缘，形成防御网
+   - 含有神经毒素的刺细胞
+   - 透明触手在受威胁时变为警告色
+   - 形态整合：基部与晶体融合，共享营养输送</p>
+</li>
+</ol>
+<p>功能分工：</p>
+<ul>
+<li>晶甲兽：提供栖息地、光合产物、保护</li>
+<li>清洁虫：维护晶体透光性、废物循环</li>
+<li>毒刺水螅：主动防御、预警系统</li>
+<li>化学通讯：三方通过信息素协调行为</li>
+</ul>
+</details>
+<p><strong>练习1.6：异星重力环境生物设计</strong>
+在一个重力为地球3倍的行星上，设计一种陆生捕食者，要求：</p>
+<ul>
+<li>解释其骨骼和肌肉适应</li>
+<li>设计独特的运动方式</li>
+<li>计算其理论最大体型</li>
+</ul>
+<p><em>提示：考虑平方-立方定律</em></p>
+<details>
+<summary>参考答案</summary>
+<p>"重力爬行者"设计：</p>
+<ol>
+<li>
+<p><strong>骨骼适应</strong>：
+   - 骨密度：地球生物的2.5倍（钙化程度极高）
+   - 骨骼横截面：椭圆形，长轴垂直于重力
+   - 脊柱：短而粗，椎骨融合成刚性结构
+   - 肢骨：空心但壁厚，类似鸟类但更坚固</p>
+</li>
+<li>
+<p><strong>肌肉系统</strong>：
+   - 肌纤维密度：地球生物的3倍
+   - 肌肉附着面积：扩大的骨突和骨嵴
+   - 液压辅助：关节处有液压囊辅助运动</p>
+</li>
+<li>
+<p><strong>运动方式</strong>：
+   - "波动爬行"：身体始终贴地，通过波动前进
+   - 最大高度：不超过20cm（减少重心高度）
+   - 速度：短距离冲刺3m/s，持续移动0.5m/s</p>
+</li>
+<li>
+<p><strong>最大体型计算</strong>：
+   - 平方-立方定律：强度∝L²，重量∝L³
+   - 地球大型陆生动物极限：~10吨
+   - 3倍重力下：10吨/3 ≈ 3.3吨
+   - 体长估算：约4-5米（高度&lt;50cm）
+   - 采用扁平化设计可略微突破此限制</p>
+</li>
+</ol>
+</details>
+<p><strong>练习1.7：程序化触手生成算法</strong>
+设计一个触手生成算法，要求：</p>
+<ul>
+<li>支持分叉</li>
+<li>包含吸盘分布函数</li>
+<li>实现卷曲动画的数学描述</li>
+</ul>
+<p><em>提示：使用贝塞尔曲线和螺旋函数</em></p>
+<details>
+<summary>参考答案</summary>
+<p>触手生成算法：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 主干曲线生成</span>
+<span class="k">def</span> <span class="nf">generate_main_tentacle</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">segments</span><span class="p">):</span>
+    <span class="c1"># 使用3次贝塞尔曲线</span>
+    <span class="n">P0</span> <span class="o">=</span> <span class="n">Vec3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 起点</span>
+    <span class="n">P1</span> <span class="o">=</span> <span class="n">Vec3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">length</span><span class="o">*</span><span class="mf">0.3</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 控制点1</span>
+    <span class="n">P2</span> <span class="o">=</span> <span class="n">Vec3</span><span class="p">(</span><span class="n">length</span><span class="o">*</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">length</span><span class="o">*</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 控制点2  </span>
+    <span class="n">P3</span> <span class="o">=</span> <span class="n">Vec3</span><span class="p">(</span><span class="n">length</span><span class="o">*</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># 终点</span>
+
+    <span class="c1"># 添加螺旋扰动</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">segments</span><span class="p">):</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">bezier_cubic</span><span class="p">(</span><span class="n">P0</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">P3</span><span class="p">,</span> <span class="n">t</span><span class="o">/</span><span class="n">segments</span><span class="p">)</span>
+        <span class="n">spiral</span> <span class="o">=</span> <span class="n">Vec3</span><span class="p">(</span>
+            <span class="n">sin</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">spiral_freq</span><span class="p">)</span> <span class="o">*</span> <span class="n">spiral_amp</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">cos</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">spiral_freq</span><span class="p">)</span> <span class="o">*</span> <span class="n">spiral_amp</span>
+        <span class="p">)</span>
+        <span class="n">positions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="n">spiral</span><span class="p">)</span>
+
+<span class="c1"># 分叉生成</span>
+<span class="k">def</span> <span class="nf">add_branches</span><span class="p">(</span><span class="n">main_curve</span><span class="p">,</span> <span class="n">branch_probability</span><span class="p">):</span>
+    <span class="n">branches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">main_curve</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">branch_probability</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">main_curve</span><span class="p">)):</span>
+            <span class="n">branch_length</span> <span class="o">=</span> <span class="n">base_length</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.3</span> <span class="o">+</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">main_curve</span><span class="p">)))</span>
+            <span class="n">branch</span> <span class="o">=</span> <span class="n">generate_sub_tentacle</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">branch_length</span><span class="p">)</span>
+            <span class="n">branches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">branch</span><span class="p">)</span>
+
+<span class="c1"># 吸盘分布</span>
+<span class="k">def</span> <span class="nf">distribute_suckers</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">density_function</span><span class="p">):</span>
+    <span class="n">suckers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">curve</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+        <span class="c1"># 密度从基部到末端递增</span>
+        <span class="n">density</span> <span class="o">=</span> <span class="n">base_density</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+        <span class="c1"># 大小从基部到末端递减</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">base_size</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.7</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+        <span class="c1"># 螺旋排列</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">golden_angle</span>  <span class="c1"># 137.5°</span>
+        <span class="n">sucker_pos</span> <span class="o">=</span> <span class="n">point</span> <span class="o">+</span> <span class="n">radial_offset</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+        <span class="n">suckers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">sucker_pos</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+
+<span class="c1"># 卷曲动画</span>
+<span class="k">def</span> <span class="nf">curl_animation</span><span class="p">(</span><span class="n">curve</span><span class="p">,</span> <span class="n">curl_amount</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+    <span class="c1"># 使用对数螺旋</span>
+    <span class="n">r</span><span class="p">(</span><span class="n">θ</span><span class="p">)</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">e</span><span class="o">^</span><span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">θ</span><span class="p">)</span>
+    <span class="c1"># 其中 θ = base_angle + curl_amount * sin(time)</span>
+
+    <span class="n">curled</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">curve</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">curve</span><span class="p">)</span>
+        <span class="c1"># 末端卷曲更多</span>
+        <span class="n">local_curl</span> <span class="o">=</span> <span class="n">curl_amount</span> <span class="o">*</span> <span class="n">t</span><span class="o">^</span><span class="mi">2</span>
+        <span class="c1"># 应用旋转矩阵</span>
+        <span class="n">rotation</span> <span class="o">=</span> <span class="n">rotation_matrix</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">local_curl</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">time</span><span class="p">))</span>
+        <span class="n">curled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotation</span> <span class="o">*</span> <span class="n">point</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">curled</span>
+</code></pre></div>
+
+<p>数学参数：</p>
+<ul>
+<li>螺旋频率：2-5 Hz</li>
+<li>分支概率：0.3 * e^(-distance_from_base)</li>
+<li>吸盘密度：ρ(t) = ρ₀(1 + 2t)</li>
+<li>卷曲函数：κ(t) = κ₀t² sin(ωt)</li>
+</ul>
+</details>
+<h2 id="gotchas">常见陷阱与错误（Gotchas）</h2>
+<h3 id="1_1">1. 生物学谬误</h3>
+<ul>
+<li><strong>错误</strong>：给昆虫设计肺部呼吸系统</li>
+<li><strong>正确</strong>：昆虫使用气管系统，这限制了它们的最大体型</li>
+</ul>
+<h3 id="2">2. 物理学违背</h3>
+<ul>
+<li><strong>错误</strong>：巨型生物使用细长的腿</li>
+<li><strong>正确</strong>：遵循平方-立方定律，大型生物需要粗壮的支撑结构</li>
+</ul>
+<h3 id="3">3. 拓扑错误</h3>
+<ul>
+<li><strong>错误</strong>：在模型合并时产生非流形几何</li>
+<li><strong>正确</strong>：确保所有边只被两个面共享</li>
+</ul>
+<h3 id="4">4. 对称性混乱</h3>
+<ul>
+<li><strong>错误</strong>：混合不兼容的对称类型（如径向+双侧）</li>
+<li><strong>正确</strong>：选择一个主导对称性，其他作为局部变化</li>
+</ul>
+<h3 id="5">5. 关节限制忽视</h3>
+<ul>
+<li><strong>错误</strong>：设计360度旋转的肘关节</li>
+<li><strong>正确</strong>：考虑肌肉和韧带的物理限制</li>
+</ul>
+<h3 id="6">6. 材质不一致</h3>
+<ul>
+<li><strong>错误</strong>：透明生物拥有不透明的内部器官（除非有特殊理由）</li>
+<li><strong>正确</strong>：保持材质逻辑的一致性</li>
+</ul>
+<h3 id="7">7. 发光能量忽视</h3>
+<ul>
+<li><strong>错误</strong>：小型生物产生照亮整个场景的光</li>
+<li><strong>正确</strong>：生物发光通常很微弱，需要黑暗环境才可见</li>
+</ul>
+<h3 id="8">8. 进化逻辑断裂</h3>
+<ul>
+<li><strong>错误</strong>：纯装饰性的复杂结构</li>
+<li><strong>正确</strong>：每个特征都应有功能性理由（即使是性选择）</li>
+</ul>
+<h2 id="_20">最佳实践检查清单</h2>
+<h3 id="_21">设计前期</h3>
+<ul>
+<li>[ ] 确定生物的生态位（捕食者/猎物/清道夫等）</li>
+<li>[ ] 选择合适的对称性类型</li>
+<li>[ ] 确定尺寸范围和比例关系</li>
+<li>[ ] 设计运动方式和相应的骨骼/肌肉系统</li>
+</ul>
+<h3 id="_22">建模阶段</h3>
+<ul>
+<li>[ ] 从低模开始，逐步添加细节</li>
+<li>[ ] 保持合理的拓扑流向</li>
+<li>[ ] 检查模型的水密性（封闭网格）</li>
+<li>[ ] 确保关节变形区域有足够的边环</li>
+</ul>
+<h3 id="_23">细节处理</h3>
+<ul>
+<li>[ ] 添加细节时考虑LOD需求</li>
+<li>[ ] 使用置换贴图而非几何细节（when appropriate）</li>
+<li>[ ] 保持UV展开的合理性</li>
+<li>[ ] 准备多套材质以适应不同场景</li>
+</ul>
+<h3 id="_24">功能验证</h3>
+<ul>
+<li>[ ] 测试所有关节的运动范围</li>
+<li>[ ] 验证重心位置的合理性</li>
+<li>[ ] 检查碰撞体积的准确性</li>
+<li>[ ] 确认动画友好的拓扑结构</li>
+</ul>
+<h3 id="_25">艺术审查</h3>
+<ul>
+<li>[ ] 轮廓在各角度都有辨识度</li>
+<li>[ ] 细节层次分明（大中小）</li>
+<li>[ ] 颜色和材质支持生物的功能设定</li>
+<li>[ ] 与游戏整体美术风格协调</li>
+</ul>
+<h3 id="_26">技术优化</h3>
+<ul>
+<li>[ ] 多边形数量在目标平台限制内</li>
+<li>[ ] 贴图分辨率合理</li>
+<li>[ ] 骨骼数量不超过引擎限制</li>
+<li>[ ] 准备了必要的LOD版本</li>
+</ul>
+<h3 id="_27">文档记录</h3>
+<ul>
+<li>[ ] 记录设计意图和灵感来源</li>
+<li>[ ] 标注特殊的技术要求</li>
+<li>[ ] 提供动画参考和行为说明</li>
+<li>[ ] 创建材质和贴图命名规范</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="index.html" class="nav-link prev">← 游戏资产3D网格设计完全指南</a><a href="chapter2.html" class="nav-link next">第2章：艺术史中的怪物原型 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

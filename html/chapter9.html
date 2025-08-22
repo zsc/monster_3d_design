@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第9章：噪声函数与程序化纹理</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">游戏资产3D网格设计完全指南</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第1章：生物形态学与怪物设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第2章：艺术史中的怪物原型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第3章：文化符号系统与风格化</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第4章：非地球生命的设计原则</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第5章：灭绝古生物与异星生命</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第6章：动态雕塑与生物机械</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第7章：异化与陌生化技法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第8章：分形几何与自然形态</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第9章：噪声函数与程序化纹理</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第10章：生成式算法与进化设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第11章：武器设计的文化语言</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第12章：机关与可动装置</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="9">第9章：噪声函数与程序化纹理</h1>
+<h2 id="_1">开篇段落</h2>
+<p>噪声函数是程序化内容生成的基石，它将数学的优雅与自然的随机性完美结合。在游戏资产设计中，从怪物皮肤的细微纹理到异星地貌的宏观结构，从能量场的流动到生物组织的生长模式，噪声函数无处不在。Ken Perlin在1985年为电影《Tron》开发的Perlin噪声，开启了程序化纹理的新纪元，至今仍是我们创造虚拟世界的核心工具。</p>
+<p>本章将深入探讨各类噪声函数的数学原理与艺术应用。我们不仅要理解噪声的生成机制，更要掌握如何将这些看似随机的模式转化为富有生命力的视觉元素。从微观的细胞结构到宏观的地质纹理，从静态的表面细节到动态的能量流动，噪声函数为我们提供了无限的创造可能。</p>
+<h2 id="_2">学习目标</h2>
+<p>完成本章学习后，你将能够：</p>
+<ol>
+<li><strong>理解核心噪声算法</strong>：掌握Perlin、Worley等经典噪声的数学原理与实现细节</li>
+<li><strong>设计多层次纹理系统</strong>：运用FBM、湍流等技术创建复杂的有机纹理</li>
+<li><strong>实现生物材质模拟</strong>：使用噪声函数生成皮肤、鳞片、细胞等生物组织纹理</li>
+<li><strong>优化GPU性能</strong>：理解并实施噪声函数的并行计算优化策略</li>
+<li><strong>创新纹理生成技术</strong>：结合多种噪声类型创造独特的视觉效果</li>
+<li><strong>控制艺术参数</strong>：精确调节噪声参数以达到特定的美学目标</li>
+</ol>
+<h2 id="91-perlin">9.1 Perlin噪声的多尺度应用</h2>
+<h3 id="911-perlin">9.1.1 Perlin噪声的数学基础</h3>
+<p>Perlin噪声的核心思想是在整数格点上定义随机梯度向量，然后通过插值生成连续平滑的噪声函数。其数学定义如下：</p>
+<p>对于2D Perlin噪声，给定点 $(x, y)$：</p>
+<p>$$
+n(x, y) = \sum_{i,j \in \{0,1\}} w_i(x) \cdot w_j(y) \cdot (g_{i,j} \cdot d_{i,j})
+$$</p>
+<p>其中：</p>
+<ul>
+<li>$g_{i,j}$ 是格点 $(⌊x⌋+i, ⌊y⌋+j)$ 上的梯度向量</li>
+<li>$d_{i,j}$ 是从格点到采样点的距离向量</li>
+<li>$w(t) = 6t^5 - 15t^4 + 10t^3$ 是改进的平滑插值函数（Perlin的改进版本）</li>
+</ul>
+<p>梯度向量的生成通常使用哈希函数确保伪随机性：</p>
+<div class="codehilite"><pre><span></span><code>      格点梯度示意：
+
+      G00 ←---→ G10
+       ↑  \  /  ↑
+       |   P    |    P: 采样点
+       ↓  /  \  ↓    
+      G01 ←---→ G11
+</code></pre></div>
+
+<h3 id="912-fbm">9.1.2 分数布朗运动（FBM）</h3>
+<p>分数布朗运动通过叠加多个不同频率和振幅的噪声层来创建自相似的分形纹理：</p>
+<p>$$
+FBM(p) = \sum_{i=0}^{n-1} a^i \cdot noise(f^i \cdot p)
+$$</p>
+<p>其中：</p>
+<ul>
+<li>$a$ 是振幅衰减因子（通常为0.5，称为persistence）</li>
+<li>$f$ 是频率增长因子（通常为2，称为lacunarity）</li>
+<li>$n$ 是叠加的层数（octaves）</li>
+</ul>
+<p>每一层称为一个octave，高频层添加细节，低频层控制整体形状：</p>
+<div class="codehilite"><pre><span></span><code>  振幅
+   ↑
+1.0|█████             第1层 (基频)
+   |
+0.5|  ███████         第2层 (2倍频)
+   |
+0.25| ██████████      第3层 (4倍频)
+   |
+   +------------------→ 频率
+      1   2   4   8
+</code></pre></div>
+
+<h3 id="913-turbulence">9.1.3 湍流函数（Turbulence）</h3>
+<p>湍流函数使用噪声的绝对值创造更加尖锐和不规则的效果：</p>
+<p>$$
+turbulence(p) = \sum_{i=0}^{n-1} \frac{|noise(2^i \cdot p)|}{2^i}
+$$</p>
+<p>这种技术特别适合模拟：</p>
+<ul>
+<li>大理石纹理（结合正弦函数）</li>
+<li>云层和烟雾效果</li>
+<li>岩石表面的风化痕迹</li>
+<li>能量场的扰动模式</li>
+</ul>
+<h3 id="914-domain-warping">9.1.4 域变形（Domain Warping）</h3>
+<p>通过使用噪声函数扭曲采样坐标，可以创造更加有机和流动的模式：</p>
+<p>$$
+pattern(p) = noise(p + noise(p + offset))
+$$</p>
+<p>多重域变形可以产生极其复杂的有机结构：</p>
+<div class="codehilite"><pre><span></span><code><span class="err">原始网格</span><span class="o">:</span><span class="w">          </span><span class="err">一次变形</span><span class="o">:</span><span class="w">           </span><span class="err">二次变形</span><span class="o">:</span>
+<span class="err">┌─┬─┬─┬─┐</span><span class="w">        </span><span class="err">╱╲╱╲╱╲╱╲</span><span class="w">        </span><span class="err">≈≈≈≈≈≈≈≈</span>
+<span class="err">├─┼─┼─┼─┤</span><span class="w">       </span><span class="err">╱</span><span class="w">  </span><span class="err">╲</span><span class="w">  </span><span class="err">╱</span><span class="w">  </span><span class="err">╲</span><span class="w">       </span><span class="err">≈≈≈≈≈≈≈≈</span>
+<span class="err">├─┼─┼─┼─┤</span><span class="w">      </span><span class="err">╲</span><span class="w">    </span><span class="err">╲╱</span><span class="w">    </span><span class="err">╱</span><span class="w">      </span><span class="err">≈≈≈≈≈≈≈≈</span>
+<span class="err">├─┼─┼─┼─┤</span><span class="w">       </span><span class="err">╲</span><span class="w">  </span><span class="err">╱</span><span class="w">  </span><span class="err">╲</span><span class="w">  </span><span class="err">╱</span><span class="w">       </span><span class="err">≈≈≈≈≈≈≈≈</span>
+<span class="err">└─┴─┴─┴─┘</span><span class="w">        </span><span class="err">╲╱╲╱╲╱╲╱</span><span class="w">        </span><span class="err">≈≈≈≈≈≈≈≈</span>
+</code></pre></div>
+
+<h3 id="915">9.1.5 怪物皮肤纹理生成实例</h3>
+<p>以生成异星爬虫类生物的皮肤为例，我们可以组合多种Perlin噪声技术：</p>
+<ol>
+<li>
+<p><strong>基础皮肤纹理</strong>：
+   - 使用低频FBM定义大的色块分布
+   - 振幅：0.3，频率：4.0，octaves：3</p>
+</li>
+<li>
+<p><strong>细节层</strong>：
+   - 高频Perlin噪声添加毛孔和细微凹凸
+   - 振幅：0.1，频率：32.0</p>
+</li>
+<li>
+<p><strong>脉络图案</strong>：
+   - 使用域变形的湍流函数创建血管纹路
+   - 变形强度：0.2，湍流octaves：4</p>
+</li>
+<li>
+<p><strong>色彩变化</strong>：
+   - 梯度映射结合噪声值
+   - 从深紫色（噪声值-1）到浅绿色（噪声值+1）</p>
+</li>
+</ol>
+<h3 id="916">9.1.6 动态噪声与时间演化</h3>
+<p>在游戏中，静态纹理往往缺乏生命力。通过引入时间维度，我们可以创造呼吸、脉动、流动等动态效果：</p>
+<p>$$
+animatedNoise(p, t) = noise(p.x, p.y, t \cdot speed)
+$$</p>
+<p>应用场景：</p>
+<ul>
+<li><strong>呼吸效果</strong>：缓慢的时间变化（speed = 0.1）模拟生物的呼吸起伏</li>
+<li><strong>能量脉动</strong>：周期性调制振幅，创造心跳般的节奏</li>
+<li><strong>表面流动</strong>：使用时间偏移UV坐标，模拟液体或能量在表面流动</li>
+<li><strong>相位动画</strong>：多个噪声层使用不同的时间速度，创造复杂的干涉图案</li>
+</ul>
+<h3 id="917-perlin">9.1.7 Perlin噪声的艺术控制参数</h3>
+<p>精确控制Perlin噪声的视觉效果需要理解各参数的影响：</p>
+<p><strong>频率（Frequency）</strong>：控制噪声的"密度"</p>
+<ul>
+<li>低频（1-4）：大的斑块，适合地形起伏</li>
+<li>中频（8-16）：中等细节，适合岩石纹理</li>
+<li>高频（32+）：精细细节，适合表面粗糙度</li>
+</ul>
+<p><strong>振幅（Amplitude）</strong>：控制噪声的"强度"</p>
+<ul>
+<li>影响最终输出的值域范围</li>
+<li>多层叠加时需要归一化处理</li>
+</ul>
+<p><strong>Octaves数量</strong>：控制细节层次</p>
+<ul>
+<li>2-3层：简单自然纹理</li>
+<li>4-6层：复杂有机形态</li>
+<li>7+层：极其详细但计算昂贵</li>
+</ul>
+<p><strong>Persistence（持续度）</strong>：控制高频层的贡献</p>
+<ul>
+<li>0.3-0.4：平滑过渡，适合云雾</li>
+<li>0.5：标准分形</li>
+<li>0.6-0.7：粗糙表面，适合岩石</li>
+</ul>
+<h2 id="92-worley">9.2 Worley噪声与细胞结构</h2>
+<h3 id="921-voronoi">9.2.1 Voronoi图的数学基础</h3>
+<p>Worley噪声（也称为细胞噪声）基于Voronoi图的概念。给定一组种子点，空间中的每个点都属于距离它最近的种子点的区域：</p>
+<p>$$
+V_i = \{p \in \mathbb{R}^n : d(p, s_i) \leq d(p, s_j), \forall j \neq i\}
+$$</p>
+<p>其中 $s_i$ 是第 $i$ 个种子点，$d$ 是距离度量（通常是欧几里得距离）。</p>
+<p>Worley噪声的核心是计算到最近几个种子点的距离：</p>
+<ul>
+<li>F1：到最近种子点的距离</li>
+<li>F2：到第二近种子点的距离</li>
+<li>F3, F4...：依此类推</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>  Voronoi单元示意：
+
+  •     |     •        • 种子点
+    \    |    /         | 边界
+     \   |   /      
+  ----•--|--•----
+     /   |   \
+    /    |    \
+  •     |     •
+</code></pre></div>
+
+<h3 id="922">9.2.2 距离函数的艺术变体</h3>
+<p>不同的距离度量产生不同的视觉效果：</p>
+<p><strong>欧几里得距离（Euclidean）</strong>：
+$$d_E = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$$
+产生圆形的细胞，适合有机纹理</p>
+<p><strong>曼哈顿距离（Manhattan）</strong>：
+$$d_M = |x_2-x_1| + |y_2-y_1|$$
+产生菱形细胞，适合晶体结构</p>
+<p><strong>切比雪夫距离（Chebyshev）</strong>：
+$$d_C = \max(|x_2-x_1|, |y_2-y_1|)$$
+产生方形细胞，适合规则图案</p>
+<p><strong>闵可夫斯基距离（Minkowski）</strong>：
+$$d_p = \left(\sum_{i=1}^{n} |x_i - y_i|^p\right)^{1/p}$$
+通过调节 $p$ 值在圆形和方形之间过渡</p>
+<h3 id="923">9.2.3 细胞边缘的提取与应用</h3>
+<p>通过组合F1和F2，可以提取细胞边缘：
+$$
+edge = F2 - F1
+$$
+当这个值接近0时，表示点位于两个细胞的边界附近。这可用于生成：</p>
+<ul>
+<li>龟裂纹理（干涸的泥土、老化的油漆）</li>
+<li>细胞壁（生物组织、蜂巢结构）</li>
+<li>碎片效果（破碎的玻璃、冰面）</li>
+</ul>
+<p>边缘锐化技术：
+$$
+sharpEdge = 1.0 - smoothstep(0.0, width, F2 - F1)
+$$</p>
+<h3 id="924">9.2.4 生物鳞片的程序化生成</h3>
+<p>鳞片是Worley噪声的经典应用。以爬行动物鳞片为例：</p>
+<ol>
+<li>
+<p><strong>基础鳞片形状</strong>：
+   - 使用F1创建基础凸起
+   - 高度函数：$h = 1.0 - F1 \cdot scale$</p>
+</li>
+<li>
+<p><strong>鳞片边缘</strong>：
+   - 边缘检测：$edge = smoothstep(0.02, 0.1, F2 - F1)$
+   - 边缘凹陷深度：根据边缘值调制高度</p>
+</li>
+<li>
+<p><strong>鳞片变化</strong>：
+   - 使用种子点ID生成每个鳞片的独特属性
+   - 颜色变化：$color = hash(cellID) \cdot variation$
+   - 大小变化：扰动种子点位置</p>
+</li>
+<li>
+<p><strong>层次细节</strong>：
+   - 大鳞片：低密度Worley（密度4x4）
+   - 小鳞片：高密度Worley（密度16x16）
+   - 混合权重基于UV位置或遮罩贴图</p>
+</li>
+</ol>
+<h3 id="925">9.2.5 晶体与矿物纹理</h3>
+<p>Worley噪声特别适合生成晶体和矿物的几何结构：</p>
+<p><strong>晶体生长模拟</strong>：</p>
+<ol>
+<li>多层Worley叠加，每层代表不同生长阶段</li>
+<li>使用F1梯度创建晶面</li>
+<li>F2-F1定义晶体边界的锐利程度</li>
+</ol>
+<p><strong>矿脉纹理</strong>：
+结合Worley和Perlin噪声：
+$$
+mineral = worley(p) \cdot 0.7 + perlin(p \cdot 8) \cdot 0.3
+$$</p>
+<h3 id="926-worley">9.2.6 混合Worley变体</h3>
+<p><strong>Voronoise（Voronoi + Noise）</strong>：
+在每个细胞内添加局部噪声，保持细胞结构的同时增加有机变化：
+$$
+voronoise(p) = F1 + perlin(p \cdot frequency) \cdot amplitude
+$$
+<strong>距离场组合</strong>：
+创造更复杂的图案：</p>
+<ul>
+<li>$F2 - F1$：细胞边缘</li>
+<li>$F1 + F2$：细胞中心加强</li>
+<li>$F2 \cdot F1$：斑点图案</li>
+<li>$(F2 - F1) / (F2 + F1)$：归一化边缘</li>
+</ul>
+<p><strong>多分辨率Worley</strong>：
+类似FBM，叠加不同尺度的Worley噪声：
+$$
+multiWorley(p) = \sum_{i=0}^{n} \frac{worley(p \cdot 2^i)}{2^i}
+$$</p>
+<h2 id="93">9.3 湍流函数与有机变形</h2>
+<h3 id="931">9.3.1 湍流的物理基础与数学模型</h3>
+<p>湍流在自然界中无处不在，从云层的翻滚到岩浆的流动。在程序化纹理中，湍流函数通过噪声的非线性变换创造复杂的有机模式：</p>
+<p><strong>基础湍流函数</strong>：
+$$
+turbulence(p) = \sum_{i=0}^{n-1} \frac{|noise(2^i \cdot p)|}{2^i}
+$$
+<strong>带偏置的湍流</strong>：
+$$
+biasedTurbulence(p, bias) = \sum_{i=0}^{n-1} \frac{(|noise(2^i \cdot p)| \cdot 2 - 1)^{bias} + 1}{2^{i+1}}
+$$
+偏置参数控制湍流的"尖锐度"：</p>
+<ul>
+<li>bias &lt; 1：更柔和的过渡</li>
+<li>bias = 1：标准湍流</li>
+<li>bias &gt; 1：更尖锐的特征</li>
+</ul>
+<h3 id="932-domain-warping">9.3.2 域变形技术（Domain Warping）</h3>
+<p>域变形通过扭曲采样空间创造流动和扭曲的效果：</p>
+<p><strong>单次变形</strong>：
+$$
+warp_1(p) = noise(p + q)
+$$
+其中 $q = noise(p + offset)$</p>
+<p><strong>递归变形</strong>：
+$$
+warp_n(p) = noise(p + \alpha \cdot warp_{n-1}(p))
+$$
+<strong>向量场变形</strong>：
+使用梯度噪声创建流场：
+$$
+\vec{v}(p) = \nabla noise(p)
+$$
+$$
+warped = noise(p + \vec{v}(p) \cdot strength)
+$$</p>
+<h3 id="933">9.3.3 大理石纹理的经典实现</h3>
+<p>大理石纹理是湍流函数最经典的应用之一：</p>
+<p>$$
+marble(p) = \sin(p.x + turbulence(p) \cdot strength)
+$$</p>
+<p>增强版大理石纹理：</p>
+<ol>
+<li><strong>基础纹理</strong>：$base = p.x \cdot frequency$</li>
+<li><strong>湍流扰动</strong>：$disturb = turbulence(p) \cdot amplitude$</li>
+<li><strong>正弦变换</strong>：$pattern = \sin(base + disturb)$</li>
+<li><strong>颜色映射</strong>：从白色到深灰的渐变</li>
+</ol>
+<p><strong>纹理脉络控制</strong>：</p>
+<ul>
+<li>主脉络方向：通过旋转坐标系控制</li>
+<li>脉络密度：调整基础频率</li>
+<li>脉络复杂度：湍流的octaves数</li>
+<li>脉络锐度：使用pow函数锐化</li>
+</ul>
+<h3 id="934">9.3.4 生物组织的模拟</h3>
+<p><strong>肌肉纤维</strong>：
+结合方向性噪声和湍流：
+$$
+muscle = anisotropicNoise(p) + turbulence(p) \cdot 0.2
+$$</p>
+<p><strong>血管网络</strong>：
+使用分支湍流模拟：</p>
+<ol>
+<li>主血管：低频湍流定义主路径</li>
+<li>分支：高频湍流添加细节</li>
+<li>毛细血管：极高频噪声</li>
+</ol>
+<p><strong>脂肪组织</strong>：
+多层Worley噪声加湍流变形：
+$$
+fat = worley(p + turbulence(p) \cdot 0.3)
+$$</p>
+<h3 id="935">9.3.5 能量场与魔法效果</h3>
+<p><strong>等离子体效果</strong>：
+$$
+plasma = \sum_{i=1}^{4} \sin(p.x \cdot i + turbulence(p) \cdot i)
+$$</p>
+<p><strong>能量涡流</strong>：
+使用极坐标湍流：
+$$
+r = length(p)
+$$
+$$
+\theta = atan2(p.y, p.x)
+$$
+$$
+vortex = turbulence(vec2(r, \theta + time))
+$$</p>
+<p><strong>魔法护盾</strong>：
+球面湍流映射：</p>
+<ol>
+<li>将3D位置映射到球面坐标</li>
+<li>应用湍流函数</li>
+<li>添加时间动画</li>
+<li>使用fresnel效果增强边缘</li>
+</ol>
+<h3 id="936">9.3.6 流体模拟的简化方法</h3>
+<p>虽然真实的流体模拟需要求解Navier-Stokes方程，但使用湍流函数可以快速创建类似效果：</p>
+<p><strong>烟雾效果</strong>：
+$$
+smoke = FBM(p + vec3(0, time \cdot rise, 0)) \cdot density
+$$</p>
+<p><strong>水流扰动</strong>：
+$$
+water = sin(p.x \cdot waveFreq + turbulence(p) \cdot 0.5 + time)
+$$</p>
+<p><strong>岩浆流动</strong>：
+结合温度梯度和湍流：
+$$
+lava = gradient(p.y) + turbulence(p) \cdot heat
+$$</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter8.html" class="nav-link prev">← 第8章：分形几何与自然形态</a><a href="chapter10.html" class="nav-link next">第10章：生成式算法与进化设计 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>
